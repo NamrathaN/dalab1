@@ -1,0 +1,69 @@
+---
+title: "External 8"
+author: "Namratha"
+date: "21 December 2017"
+output: html_document
+---
+
+Store all dept faculty names with designation, number of papers published, training programs attended and salary details.
+```{r}
+
+faculty<-read.csv("Q3a.csv",header=T)
+names(faculty)
+faculty
+
+```
+
+A. Plot, in each dept, how many faculty are earning more than 1 lakh.
+
+```{r}
+
+f<-faculty[faculty$Salary>100000, c("Name","Dept")]
+plot(f$Dept)
+
+```
+
+B.Create subset of faculty, who have published more than 10 papers and their designation is Associate professor.
+
+```{r}
+
+sub<-subset(faculty,faculty$Papers.Published>5 & faculty$Designation=="Assosciate Professor")
+sub
+
+```
+
+C.Find out average papers published by each dept, designation wise and Find out Average training programs attended by faculty each dept wise.
+
+```{r}
+
+aggregate(Papers.Published~Dept,faculty,mean)
+aggregate(Training~Dept,faculty,mean)
+
+```
+
+D.Extract top 3 performers among faculty dept wise(who have more papers published and more training programmes attended)
+
+```{r}
+
+ff<-faculty[order(-faculty$Papers.Published-faculty$Training),]
+ff
+
+cs<-ff[ff$Dept=="CSE",]
+csq<-data.frame(cs[1:3,c("Name","Dept","Training","Papers.Published")])
+csq
+
+
+```
+
+E.Sort faculty details ,dept wise separately.
+
+```{r}
+faculty[order(faculty$Dept,faculty$Name),]
+
+```
+
+F.Search for faculty name in the data set and retrieve his/her details.
+
+```{r}
+subset(faculty,Name=="Mithra")
+```

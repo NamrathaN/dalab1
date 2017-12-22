@@ -1,0 +1,197 @@
+---
+title: "EXTERNAL 5"
+author: "Namratha"
+date: "21 December 2017"
+output: html_document
+---
+
+Store all dept faculty names with designation, number of papers published, training programs attended and salary detail
+
+```{r}
+faculty<-read.csv("Q3a.csv",header=T)
+faculty
+
+```
+A. Store faculty salary numerically, transform into factor.
+
+```{r}
+
+fac_cut<- cut(faculty$Salary, breaks = c(50000,75000,10000,Inf))
+str(fac_cut)
+```
+
+B.Check whether faculty paper publication count and number of training program attended are same or not.
+```{r}
+
+identical(faculty$Papers.Published,faculty$Training)
+
+```
+
+C.Extract paper published count separately. If the count is greater than 15 map it as "Excellent", if it is (10-15 )map it as "good", if it is (5 to 10) map it as " moderate"), if it is (1-5) map it as "need to improve", else "poor, start your research".
+
+```{r}
+assignComment<-function(x)
+{
+  if(x>=15)
+    res<-"Excellent"
+  else if(x>=10)
+    res<-Good
+  else if(x>=5)
+    res<-"Moderate"
+  else if(x>=1)
+    res<-"Need to improve"
+  else
+    res<-" Start research"
+  
+  res
+}
+
+for(i in 1:nrow(faculty))
+{
+  papers<-faculty[i,"Papers.Published"]
+  ans<-assignComment(papers)
+  faculty[i,"Comment"]<-ans
+}
+
+faculty
+
+```
+
+D. Consider the solution of (c ). Map "Excellent", "good" as " Good performers";Map " Moderate" and "need to improve" as " Ok, Keep it up". Else " map to " You may be fired!"
+
+```{r}
+
+assignImplication<-function(x)
+{
+ if(x =="Excellent"| x=="Good") 
+    res <- "Good Perfformers"
+ else if(x =="Moderate" | x=="Need to improve") 
+    res <- "Ok,Keep it up"
+ else
+    res<-"You may be fired!"
+  
+  res
+}
+for(i in 1:nrow(faculty))
+{
+ comment<-faculty[i,"Comment"]
+ ans<-assignImplication(comment)
+ faculty[i,"Implication"]<-ans
+ }
+ 
+faculty
+
+```
+
+E. Transform designations to numerical data
+
+```{r}
+
+fac1<-transform(faculty, Designation=as.numeric(Designation))
+fac1
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

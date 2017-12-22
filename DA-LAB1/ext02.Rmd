@@ -1,0 +1,63 @@
+---
+title: "External 2"
+author: "Namratha"
+date: "21 December 2017"
+output: html_document
+---
+
+Store all dept faculty names with designation, number of papers published, training programs attended  and salary details.
+
+```{r}
+faculty<-read.csv("Q3a.csv",header=T)
+names(faculty)
+faculty
+```
+
+A. Extract each dept faculty details separately
+```{r}
+aggregate(Name~Dept,faculty,toString)
+
+```
+
+B.Extract Professors of each dept separately
+```{r}
+
+prof<-faculty[faculty$Designation=="Professor",c("Name","Dept","Salary")]
+aggregate(Name~Dept,prof,toString)
+
+```
+
+C.Extract people who earn more than 1.5 lakh in each dept where their designation is prof, associate or assistant
+```{r}
+
+ppp<-faculty[faculty$Salary>="150000",c("Name","Dept")]
+aggregate(Name~Dept,ppp,toString)
+
+```
+
+D. Find out the cost of professors in each dept .(sum up their salary to get cost of them)
+```{r}
+
+aggregate(Salary~Dept,prof,sum)
+
+```
+
+E.Find the individual cost of each dept faculty and average cost of faculty in dept
+```{r}
+SSal<-aggregate(Salary~Dept,faculty,sum)
+MSal<-aggregate(Salary~Dept,faculty,mean)
+SSal
+MSal
+```
+
+F.Find out Which dept has highest average cost of faculty and which dept has lowest cost of faculty
+```{r}
+
+MSal[which.max(MSal$Salary),]
+MSal[which.min(MSal$Salary),]
+
+
+```
+
+
+

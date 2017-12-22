@@ -1,0 +1,201 @@
+---
+title: "External 9"
+author: "Namratha"
+date: "21 December 2017"
+output: html_document
+---
+
+Store all dept faculty names with designation,  number of papers published, training programs attended and salary details.
+
+```{r}
+
+faculty<-read.csv("Llaabb-4.csv",header=T)
+names(faculty)
+faculty
+
+```
+
+A. Change the column names of faculty data set.
+
+```{r}
+
+colnames(faculty)<-c("Names","Desig","Sal","Dept","Trainings","Papers","Gender")
+summary(faculty)
+
+```
+
+B. Use map values() , as.factor() and transform () to change the designation column to have numerical values. 1- Prof, 2-Asso.Prof, 3-Asst.Prof;to change gender column 1-Male, 2-Female
+
+```{r}
+
+library(plyr)
+f<-transform(faculty,
+             Desig=as.factor(mapvalues(Desig,c("Professor","Assosciate Professor","Assistant Professor"),c(1,2,3))),
+             Gender=as.factor(mapvalues(Gender,c("M","F"),c(1,2))))
+f
+
+```
+
+C.Using with() and tapply() , calculate the mean training programs attended and no. of papers published in each department. Format it for markdown.
+
+```{r}
+
+library(knitr)
+library(rmarkdown)
+
+kable(with(f , tapply(Trainings, INDEX=list(Dept,Papers), FUN =mean)), format="markdown")
+
+kable(with(f , tapply(Trainings, INDEX=list(Dept,Gender), FUN=mean)) , format="markdown")
+
+kable(with(f, tapply(Trainings, INDEX = list(Dept,Gender), FUN=sum)), format = "markdown")
+
+```
+
+D. Using with() and aggregate() , calculate the mean training programs attended and no. of papers published in each department. Format it for markdown.
+
+```{r}
+
+kable(with(f, aggregate(Trainings, by=list(Dept,Papers), FUN=mean)), format = "markdown")
+
+kable(with(f, aggregate(Trainings, by=list(Dept,Gender), FUN=mean)), format = "markdown")
+
+kable(with(f, aggregate(Trainings, by=list(Dept,Gender), FUN=mean)), format = "markdown")
+
+```
+
+E.Check whether the mean value of no. of papers published in depts. are influenced by training programs attended and designation. 
+
+```{r}
+
+aggregate(Papers~Trainings+Desig, FUN = mean, data=f)
+
+```
+
+F. Do regression analysis using aggregate() for faculty performance.
+
+```{r}
+
+aggregate(Trainings+Papers~Desig+Dept, data=faculty, FUN = toString)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
