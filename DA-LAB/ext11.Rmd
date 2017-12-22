@@ -1,0 +1,310 @@
+Store all dept faculty names with designation,  number of papers published, training programs attended and salary details.
+
+```{r}
+
+faculty<-read.csv("Q3a.csv",header=T)
+names(faculty)
+#faculty
+
+```
+
+A. Plot average training programs attended against designations(only 3 designations)  of the institution using plot()
+
+```{r}
+
+f1<-aggregate(Training~Designation,faculty,mean)
+plot(f1$Designation, f1$Training)
+
+```
+
+B. Plot average papers published against designations of  the institution using plot().
+
+```{r}
+
+f2<-aggregate(Papers.Published~Designation,faculty,mean)
+f2
+plot(f2$Designation, f2$Papers.Published)
+
+```
+
+C. Plot the graphs of (a) and (b) using with() and plot().
+
+```{r}
+
+#par(mfrow=c(1,2))
+
+with(faculty, plot(Designation, Training , main = "Designation vs Trainings", xlab = "Designation",  ylab = "Tranings",col=7))
+
+with(faculty, plot(Designation, Papers.Published, 
+                   main = "Designation vs Papers Published", 
+                   xlab = "Designation", 
+                    ylab = "Papers Published ",col=8))
+
+
+```
+
+D. Change the x axis , color and y-axis labels respectively.  Add legends. 
+```{r}
+
+plot(f2$Desig, f2$Papers,xlab="Designation",ylab="Papers Published",main="Designation vs Papers Published",col=5)
+
+```
+
+E.Draw scatter plot for above questions. Draw box plot for above question.  Draw bar plots for above questions. Draw single variable plots for above questions.
+
+```{r}
+
+with(faculty, boxplot(as.numeric(Designation), Training , 
+                      main=" Designation vs Training" ,
+                      xlab="Designation",
+                      ylab="Training", col=1))
+
+with(f, boxplot(as.numeric(Desig), Papers,
+              main = "Designation vs Papers Published",
+              xlab = "Designation",
+              ylab = "Papers Published ",col=2))
+
+
+with(f, barplot(as.numeric(Desig), Trainings,
+              main = "Designation vs Trainings",
+              xlab = "Designation",
+              ylab = "Tranings",col=3))
+with(f, barplot(as.numeric(Desig), Papers,
+              main = "Designation vs Papers Published",
+              xlab = "Designation",
+              ylab = "Papers Published ",col=4))
+
+```
+
+F. Plot the prof, asst.prof and asso.prof average performance in different colors using rep(), colorpalatte() functions. Represent each designation average performance by different symbols.
+
+```{r}
+
+c1<-subset(faculty,Designation=="Assosciate Professor", c("Papers.Published","Training"))
+y1<-mean(c1$Papers.Published+ c1$Training)
+
+c2<-subset(faculty,Designation=="Assistant Professor",    c("Papers.Published","Training"))
+y2<-mean(c2$Papers.Published+c2$Training)
+
+c3<-subset(faculty,Designation=="Professor",
+           c("Papers.Published","Training"))
+y3<-mean(c3$Papers.Published+c3$Training)
+
+x<-c(1,2,3)
+y<-c(y1,y2,y3)
+
+p<-c(19,23,15)
+ plot(x, y, main = "avg performance", 
+                   xlab = "assoc prof", 
+                   ylab = "Tranings",col=palette(),pch=p)
+ 
+ with(f,text( x =1 ,y=y1, labels ="assoc prof",
+                pos = rep(c(1, 3, 1), c(5, 1, 2)))) 
+
+
+  with(f,text(x =2,y=y2, labels ="assis prof",
+                pos = rep(c(1, 3, 1), c(5, 1, 2)))) 
+  with(f,text(x =3,y=y3, labels ="prof",
+                pos = rep(c(1, 3, 1), c(5, 1, 2)))) 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

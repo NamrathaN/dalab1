@@ -1,0 +1,125 @@
+---
+title: "external 4"
+author: "Namratha"
+date: "21 December 2017"
+output: html_document
+---
+
+Store all dept (9 depts) students names,USN,Dept names, 5 subject marks , grades and SGPA in csv file using ms excel. 
+```{r}
+stud<-read.csv("Q2a.csv",header=T)
+names(stud)
+stud
+```
+
+A. Create table from student data with USN and names only.
+```{r}
+stud[c("Names","USN")]
+#table(stud$Names,stud$USN)
+```
+
+B.Display the typeof each column.
+```{r}
+sapply(student,typeof)
+```
+
+C. Write a function to provide recommendations of students about their performance in the exams  like "Good", "Moderate", "Need improvement" ,etc., 
+```{r}
+assignComment<-function(mark)
+{
+  x<-sum(mark)/5
+  
+  if(x>=80)
+    res<-"Good"
+  else if(x>=60 & x<80)
+    res<-"Moderate"
+  else if (x>=40)
+    res<-"Need improvement"
+  else
+    res<-"Poor"
+  
+  res
+ }
+
+
+for (i in 1:nrow(stud)) 
+{
+  s1<-stud[i,"Sub1"]
+  s2<-stud[i,"Sub2"]
+  s3<-stud[i,"Sub3"]
+  s4<-stud[i,"Sub4"]
+  s5<-stud[i,"Sub5"]
+  
+  mark<-c(s1,s2,s3,s4,s5)
+  ans<-assignComment(mark)
+  
+  stud[i,"Comment"]<-ans
+}
+
+stud
+```
+D. Write a function to perform statistical analysis of students data.
+
+```{r}
+
+Summary_sub<-function(x)
+{
+  res<-c(mean=mean(x),median=median(x),sd=sd(x))
+  res
+}
+
+sub2<-stud$Sub2
+ans<-Summary_sub(sub2)
+ans
+
+```
+
+E. Use sapply to perform ( c ) and  ( d )
+
+```{r}
+
+assignResult<-function(x)
+{
+  
+  if(x>=80)
+    res<-"Good"
+  else if(x>=60 & x<80)
+    res<-"Moderate"
+  else if (x>=40)
+    res<-"Need improvement"
+  else
+    res<-"Poor"
+  
+  res
+}
+
+sub1<-stud$Sub1
+ans<-sapply(sub1,FUN = assignResult)
+ans
+ans2<-sapply(sub2,FUN = Summary_sub)
+ans2
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

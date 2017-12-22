@@ -1,0 +1,177 @@
+
+Store all dept faculty names with designation, number of papers published, training programs attended and salary detail
+
+```{r}
+faculty<-read.csv("Q3a.csv",header=T)
+faculty
+
+```
+
+A. Using factor() and mapvalues() convert designations to numerical data.
+
+```{r}
+
+fac2<-transform(faculty,
+                Designation=as.factor(
+                  mapvalues(Designation,
+                            c("Professor","Assistant Professor","Assosciate Professor"),
+                            c(1,2,3))))
+fac2
+
+```
+
+B.Create table for faculty names and designations.
+
+```{r}
+table(faculty$Name,faculty$Designation)
+```
+
+C.Write a function to provide recommendation about faculty performance based on the number of papers published and number of training programs attended. Like Good, Moderate, Need improvement .
+
+```{r}
+
+assignComment <- function(x) 
+{
+ if(x >= 15) {
+    res <- "Excellent"
+  } else if(x >= 10 & x<15) {
+    res <- "Good"
+  } else if(x >= 5 & x<10) {
+    res <- "Moderate"
+  } else if(x>=1 & x<5){
+    res <- "Need to improve"
+  }
+  else{
+    res<-"Poor,start your research"
+  }
+  res
+}
+for(i in 1:nrow(faculty))
+{
+ papers<-faculty[i,"Papers.Published"]
+ ans<-assignComment(papers)
+ faculty[i,"Comment"]<-ans
+ }
+ 
+faculty
+
+```
+
+D.Write a function to perform statistical analysis of faculty data to identify faculty performance of depts.
+
+```{r}
+
+Summary_fac<-function(x)
+{
+  ans<-c(mean=mean(x), median=median(x), sd=sd(x))
+  ans
+
+}
+
+Summary_fac(faculty$Training)
+
+```
+
+E.Use sapply to perform all the above functions.
+
+```{r}
+
+assignComment<-function(x)
+{
+  if(x>=15)
+    res<-"Excellent"
+  else if(x>=10)
+    res<-Good
+  else if(x>=5)
+    res<-"Moderate"
+  else if(x>=1)
+    res<-"Need to improve"
+  else
+    res<-" Start research"
+  
+  res
+}
+
+papers<-faculty[,"Papers.Published"]
+ans<-sapply(papers,FUN=assignComment)
+f<-data.frame(faculty$Name,ans)
+f
+
+
+assignImplication<-function(x)
+{
+ if(x =="Excellent"| x=="Good") 
+    res <- "Good Perfformers"
+ else if(x =="Moderate" | x=="Need to improve") 
+    res <- "Ok,Keep it up"
+ else
+    res<-"You may be fired!"
+  
+  res
+}
+
+comment<-f[,"ans"]
+ans<-sapply(comment, FUN=assignImplication)
+f2<-data.frame(faculty$Name, ans)
+f2
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,293 @@
+---
+title: "EXT-3"
+author: "Namratha"
+date: "21 December 2017"
+output: html_document
+---
+
+Store all dept (9 depts) students names,USN,Dept names, 5 subject marks , grades and SGPA in csv file using ms excel. 
+```{r}
+stud<-read.csv("Q2a.csv",header=T)
+names(stud)
+```
+
+A.Store students marks numerically, transform into grades and store in new data frame
+
+```{r}
+
+gradeCalculator<-function(mark)
+{
+  m<-c()
+  for(x in mark)
+  {
+    if(x>=90)
+      res<-"S"
+    else if(x>=80 & x<90)
+      res<-"A"
+    else if(x>=60 & x<80)
+      res<-"B"
+    else if (x>=40 & x<60)
+      res<-"c"
+    else
+      res<-"D"
+    
+    m<-c(m,res)
+  }
+  m
+}
+
+for(i in 1:nrow(stud))
+{
+  s1<-stud[,"Sub1"]
+  s2<-stud[,"Sub2"]
+  s3<-stud[,"Sub3"]
+  s4<-stud[,"Sub4"]
+  s5<-stud[,"Sub5"]
+  g1<-calculateGrade(s1)
+  g2<-calculateGrade(s2)
+  g3<-calculateGrade(s3)
+  g4<-calculateGrade(s4)
+  g5<-calculateGrade(s5)
+  
+}
+
+ans<-data.frame(stud$Names,stud$USN,stud$Dept,stud$SGPA,g1,g2,g3,g4,g5)
+ans
+```
+
+B.Check whether students grades are identical or not in each subject
+
+```{r}
+
+identical(ans$g1,ans$g2)
+
+```
+
+C.Extract students' marks in each subject separately. If the student has scored greater than 80 map it as "good", if it is between (80 and 60) map it as "moderate", if it is between (40 and 60) map it as "need improvement", else map it as "poor".
+
+```{r}
+
+assignComment<-function(mark)
+{
+  x<-sum(mark)/5
+  
+  if(x>=80)
+    res<-"Good"
+  else if(x>=60 & x<80)
+    res<-"Moderate"
+  else if (x>=40)
+    res<-"Need improvement"
+  else
+    res<-"Poor"
+  
+  res
+ }
+
+
+for (i in 1:nrow(stud)) 
+{
+  s1<-stud[i,"Sub1"]
+  s2<-stud[i,"Sub2"]
+  s3<-stud[i,"Sub3"]
+  s4<-stud[i,"Sub4"]
+  s5<-stud[i,"Sub5"]
+  
+  mark<-c(s1,s2,s3,s4,s5)
+  ans<-assignComment(mark)
+  
+  stud[i,"Comment"]<-ans
+}
+
+stud
+
+```
+
+D.Consider dataset given in (a) , map the S,A, grades as " GOOD"; map ,B,C grades as "average", D,E grades as "below average"; 'F' grade as "poor".
+
+```{r}
+
+calculateGrade<-function(x)
+{
+  if(x=="S"|x=="A")
+    res<-"Good"
+  else if(x=="B"|x=="C")
+    res<-"Average"
+  else if(x=="D"|x=="E")
+    res<-"Below average"
+  else
+    res<-"Poor"
+  
+  res
+}
+
+for(i in 1:nrow(stud))
+{
+  g<-stud[i,"Grade"]
+  
+  ans<-calculateGrade(g)
+  
+  stud[i,"Grade_comment"]<-ans
+}
+
+stud
+
+```
+
+E. Transform dept names to numerical data.
+```{r}
+stud1<-transform(stud,Dept=as.numeric(Dept))
+stud1
+```
+
+F. Using factor() and mapvalues() convert dept names to numerical data.
+```{r}
+library(plyr)
+stud2<-transform(stud,Dept=as.factor(mapvalues(Dept,c("CSE","ISE"),c(1,2))))
+stud2
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

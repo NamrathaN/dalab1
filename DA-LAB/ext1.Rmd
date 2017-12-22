@@ -1,0 +1,119 @@
+---
+title: "LABEX"
+author: "Namratha"
+date: "21 December 2017"
+output: html_document
+---
+
+```{r}
+stud<-read.csv("C:/Users/MURTHY/Downloads/Q2a.csv",header=T)
+print(names(stud))
+stud
+
+```
+
+Extract each dept students names separately
+```{r}
+
+aggregate(Names~Dept,stud,toString)
+
+```
+
+
+Extract students who have scored above 9 SGPA in each dept
+```{r}
+s1<-stud[stud$SGPA>=9,c("Names","Dept")]
+aggregate(Names~Dept,s1,toString)
+```
+
+E. Store students marks numerically, transform into grades and store in new data frame
+
+```{r}
+calculateGrade<-function(mark)
+{
+  m<-c()
+  for(x in mark)
+  {
+    if(x>=80 & x<90){
+      res<-"A"
+    }
+    else if(x>=60 & x<80){
+      res<-"B"
+    }
+    else if(x>=40 & x<60){
+      res<-"C"
+    }
+    else if(x>=90){
+      res<-"S"
+    }
+    else{
+      res<-"D"
+    }
+    
+    m<-c(m,res)
+  }
+  
+  m
+}
+
+for(i in 1:nrow(stud))
+{
+  s1<-stud[,"Sub1"]
+  s2<-stud[,"Sub2"]
+  s3<-stud[,"Sub3"]
+  s4<-stud[,"Sub4"]
+  s5<-stud[,"Sub5"]
+  g1=calculateGrade(s1)
+  g2=calculateGrade(s2)
+  g3=calculateGrade(s3)
+  g4=calculateGrade(s4)
+  g5=calculateGrade(s5)
+}
+ans<-data.frame(stud$Names,stud$USN,stud$Dept,g1,g2,g3,g4,g5,stud$SGPA)
+ans
+
+```
+
+Extract S grade scores in all subjects in each dept separately.
+
+```{r}
+s<-ans[ans$g1=="S"|ans$g2=="S"|ans$g3=="S"|ans$g4=="S"|ans$g5=="S",c("stud.Names","stud.Dept")]
+s
+```
+
+Extract students who have scored at least S grades in any 2 subjects
+```{r}
+ans[rowSums(ans=="S")>1,c("stud.Names","stud.Dept")]
+
+```
+Check whether students grades are identical or not in each subject
+
+```{r}
+
+identical(student$Sub1,student$Sub2,student$Sub3,student$Sub4,student$Sub5)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
